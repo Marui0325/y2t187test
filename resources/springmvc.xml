@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
+	<context:component-scan base-package="smbms.control" />
+
+	<mvc:annotation-driven></mvc:annotation-driven>
+
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" 
+	p:prefix="/WEB-INF/jsp/" p:suffix=".jsp"/>
+	
+	<!-- 指定系统WebContent目录中哪些子目录和文件可以直接让浏览器访问 -->
+	<!-- ** 内部所有文件及所有子目录下文件 -->
+	<mvc:resources location="/statics/" mapping="/statics/**" />
+	
+	<!-- jsp页面跳转简单业务功能，不需要Control方法 -->
+	<mvc:view-controller path="/user/useradd.html" view-name="useradd"/>
+	<mvc:view-controller path="/" view-name="login"/>
+	
+	<!-- 全局异常处理 -->
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<!-- 指定哪种类型异常，跳转的页面 -->
+				<prop key="java.lang.RuntimeException">error</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 文件上传解析器 -->
+	<bean id="multipartResolver" 
+	class="org.springframework.web.multipart.commons.CommonsMultipartResolver" 
+	p:defaultEncoding="utf-8"
+	p:maxUploadSize="1024000"
+	/>
+</beans>

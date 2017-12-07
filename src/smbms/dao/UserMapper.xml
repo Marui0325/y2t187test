@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+       PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="smbms.dao.UserMapper">
+
+   <select id="getUserById" resultType="smbms.pojo.User">
+       select
+       `id` as `id`,
+       `userCode` as `usercode`,
+       `userName` as `username`,
+       `userPassword` as `userpassword`,
+       `gender` as `gender`,
+       `birthday` as `birthday`,
+       `phone` as `phone`,
+       `address` as `address`,
+       `userRole` as `userrole`,
+       `createdBy` as `createdby`,
+       `creationDate` as `creationdate`,
+       `modifyBy` as `modifyby`,
+       `modifyDate` as `modifydate`,
+       `idPicPath` as `idpicpath`
+       from `smbms_user`
+       <trim prefix="where" prefixOverrides="and | or">
+           <if test="id != null">
+               and `id`=#{id}
+           </if>
+       </trim>
+   </select>
+
+   <select id="getUserListByMap" resultType="smbms.pojo.User"
+           parameterType="java.util.Map">
+           select
+           `id` as `id`,
+           `userCode` as `usercode`,
+           `userName` as `username`,
+           `userPassword` as `userpassword`,
+           `gender` as `gender`,
+           `birthday` as `birthday`,
+           `phone` as `phone`,
+           `address` as `address`,
+           `userRole` as `userrole`,
+           `createdBy` as `createdby`,
+           `creationDate` as `creationdate`,
+           `modifyBy` as `modifyby`,
+           `modifyDate` as `modifydate`,
+           `idPicPath` as `idpicpath`
+           from `smbms_user`
+       <trim prefix="where" prefixOverrides="and | or">
+           <if test="id != null">
+               and `id` = #{id} 
+           </if>
+           <if test="userCode != null and usercode!=''">
+               and `userCode` like CONCAT('%',#{userCode},'%') 
+           </if>
+           <if test="userName != null and username!=''">
+               and `userName` like CONCAT('%',#{userName},'%') 
+           </if>
+           <if test="userPassword != null and userpassword!=''">
+               and `userPassword` = #{userPassword}
+           </if>
+           <if test="gender != null">
+               and `gender` = #{gender} 
+           </if>
+           <if test="birthday != null">
+               and `birthday` = #{birthday} 
+           </if>
+           <if test="phone != null and phone!=''">
+               and `phone` like CONCAT('%',#{phone},'%') 
+           </if>
+           <if test="address != null and address!=''">
+               and `address` like CONCAT('%',#{address},'%') 
+           </if>
+           <if test="userRole != null">
+               and `userRole` = #{userRole} 
+           </if>
+           <if test="createdBy != null">
+               and `createdBy` = #{createdBy} 
+           </if>
+           <if test="creationDate != null">
+               and `creationDate` = #{creationDate} 
+           </if>
+           <if test="modifyBy != null">
+               and `modifyBy` = #{modifyBy} 
+           </if>
+           <if test="modifyDate != null">
+               and `modifyDate` = #{modifyDate} 
+           </if>
+           <if test="idPicPath != null and idpicpath!=''">
+               and `idPicPath` like CONCAT('%',#{idPicPath},'%') 
+           </if>
+       </trim>
+   </select>
+   
+   <select id="getUserRecordCount" resultType="int" parameterType="java.util.Map">
+			select count(1) from `smbms_user`
+		<trim prefix="where" prefixOverrides="and | or">
+           <if test="id != null">
+               and `id` = #{id} 
+           </if>
+           <if test="userCode != null and usercode!=''">
+               and `userCode` like CONCAT('%',#{userCode},'%') 
+           </if>
+           <if test="userName != null and username!=''">
+               and `userName` like CONCAT('%',#{userName},'%') 
+           </if>
+           <if test="userPassword != null and userpassword!=''">
+               and `userPassword` like CONCAT('%',#{userPassword},'%') 
+           </if>
+           <if test="gender != null">
+               and `gender` = #{gender} 
+           </if>
+           <if test="birthday != null">
+               and `birthday` = #{birthday} 
+           </if>
+           <if test="phone != null and phone!=''">
+               and `phone` like CONCAT('%',#{phone},'%') 
+           </if>
+           <if test="address != null and address!=''">
+               and `address` like CONCAT('%',#{address},'%') 
+           </if>
+           <if test="userRole != null">
+               and `userRole` = #{userRole} 
+           </if>
+           <if test="createdBy != null">
+               and `createdBy` = #{createdBy} 
+           </if>
+           <if test="creationDate != null">
+               and `creationDate` = #{creationDate} 
+           </if>
+           <if test="modifyBy != null">
+               and `modifyBy` = #{modifyBy} 
+           </if>
+           <if test="modifyDate != null">
+               and `modifyDate` = #{modifyDate} 
+           </if>
+           <if test="idPicPath != null and idpicpath!=''">
+               and `idPicPath` like CONCAT('%',#{idPicPath},'%') 
+           </if>
+       </trim>
+   </select>
+
+   <insert id="insertUser" parameterType="smbms.pojo.User">
+       insert into `smbms_user`(
+              		`userCode`,
+              		`userName`,
+              		`userPassword`,
+              		`gender`,
+              		`birthday`,
+              		`phone`,
+              		`address`,
+              		`userRole`,
+              		`createdBy`,
+              		`creationDate`,
+              		`modifyBy`,
+              		`modifyDate`,
+              		`idPicPath`
+       )
+       values(
+              		#{usercode},
+              		#{username},
+              		#{userpassword},
+              		#{gender},
+              		#{birthday},
+              		#{phone},
+              		#{address},
+              		#{userrole},
+              		#{createdby},
+              		#{creationdate},
+              		#{modifyby},
+              		#{modifydate},
+              		#{idpicpath}
+       )
+   </insert>
+
+   <update id="updateUser" parameterType="smbms.pojo.User">
+       update `smbms_user`
+       <trim prefix="set" suffixOverrides="," suffix="where `id`=#{id}">
+           <if test="usercode != null and usercode!=''">       
+               `userCode`=#{usercode},
+           </if>
+           <if test="username != null and username!=''">       
+               `userName`=#{username},
+           </if>
+           <if test="userpassword != null and userpassword!=''">       
+               `userPassword`=#{userpassword},
+           </if>
+           <if test="gender != null">       
+               `gender`=#{gender},
+           </if>
+           <if test="birthday != null">       
+               `birthday`=#{birthday},
+           </if>
+           <if test="phone != null and phone!=''">       
+               `phone`=#{phone},
+           </if>
+           <if test="address != null and address!=''">       
+               `address`=#{address},
+           </if>
+           <if test="userrole != null">       
+               `userRole`=#{userrole},
+           </if>
+           <if test="createdby != null">       
+               `createdBy`=#{createdby},
+           </if>
+           <if test="creationdate != null">       
+               `creationDate`=#{creationdate},
+           </if>
+           <if test="modifyby != null">       
+               `modifyBy`=#{modifyby},
+           </if>
+           <if test="modifydate != null">       
+               `modifyDate`=#{modifydate},
+           </if>
+           <if test="idpicpath != null and idpicpath!=''">       
+               `idPicPath`=#{idpicpath}
+           </if>
+       </trim>
+   </update>
+
+   <delete id="deleteUserById" parameterType="Integer">
+       delete from `smbms_user` where `id` = #{id}
+   </delete>
+</mapper>
